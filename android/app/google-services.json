@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "365541487094",
+    "project_id": "social-app-67123",
+    "storage_bucket": "social-app-67123.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:365541487094:android:ef4880bbf9741bd716d7d7",
+        "android_client_info": {
+          "package_name": "eslam.younis_social_App"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "365541487094-6d4dpc39flpmerapgig4fngh1nncda7h.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "eslam.younis_social_App",
+            "certificate_hash": "352a2bce74dba4d0f955dce7d76b16b1e16fc8af"
+          }
+        },
+        {
+          "client_id": "365541487094-sui4bmmuktb2nj635ep1ic0m5lvelbko.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAGHlZ6a30E7Cyrndwazt5Jop4_KYD_FUs"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "365541487094-sui4bmmuktb2nj635ep1ic0m5lvelbko.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

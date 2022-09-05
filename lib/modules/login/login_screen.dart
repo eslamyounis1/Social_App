@@ -1,6 +1,8 @@
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:iconsax/iconsax.dart';
 
+import '../../shared/firebase_auth.dart';
 import '../sign_up/sign_up_screen.dart';
 
 class LoginScreen extends StatefulWidget {
@@ -25,6 +27,17 @@ class _LoginScreenState extends State<LoginScreen> {
       }
       textFieldFocusNode.canRequestFocus = false;
     });
+  }
+
+  late FirebaseAuthentication auth;
+
+  @override
+  void initState() {
+    Firebase.initializeApp().whenComplete(() {
+      auth = FirebaseAuthentication();
+      setState(() {});
+    });
+    super.initState();
   }
 
   @override
@@ -229,7 +242,17 @@ class _LoginScreenState extends State<LoginScreen> {
                     child: ElevatedButton(
                       style: ElevatedButton.styleFrom(
                           backgroundColor: Colors.transparent, elevation: 0.0),
-                      onPressed: () {},
+                      onPressed: () {
+                        var userId = '';
+                        auth.login(_emailController.text, _pwdController.text).then((value){
+                          if(value == null) {
+                            debugPrint('Login Error');
+                          }else{
+                            userId = value;
+                            debugPrint('$userId successfully logged in');
+                          }
+                        });
+                      },
                       child: circular
                           ? const CircularProgressIndicator(
                               color: Colors.white,
@@ -250,7 +273,15 @@ class _LoginScreenState extends State<LoginScreen> {
               height: 10.0,
             ),
             InkWell(
-              onTap: (){},
+              onTap: () {
+                auth.loginWithGoogle().then((value){
+                  if(value == null){
+                    debugPrint('Error signing In with google');
+                  }else{
+                    debugPrint('$value successfully Logged in with google');
+                  }
+                });
+              },
               child: Container(
                 width: 350.0,
                 decoration: BoxDecoration(

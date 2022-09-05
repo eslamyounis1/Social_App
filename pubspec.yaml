@@ -41,6 +41,18 @@ dependencies:
   iconsax: ^0.0.8
   flutter_svg: ^1.1.4
 
+  # firebase_packages
+  firebase_core: ^1.21.1
+  firebase_auth: ^3.7.0
+  cloud_firestore: ^3.4.6
+
+  #Google_Sign-in
+  google_sign_in: ^5.4.1
+
+  #bloc & cubit
+  bloc: ^8.1.0
+  flutter_bloc: ^8.1.1
+
 dev_dependencies:
   flutter_test:
     sdk: flutter
