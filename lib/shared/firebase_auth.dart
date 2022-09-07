@@ -1,4 +1,5 @@
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 
 class FirebaseAuthentication {
@@ -14,8 +15,8 @@ class FirebaseAuthentication {
         password: password,
       );
       return credential.user!.uid;
-    } on FirebaseAuthException {
-      return null;
+    } on FirebaseAuthException catch (e) {
+      Fluttertoast.showToast(msg: '$e');
     }
   }
 
@@ -27,35 +28,38 @@ class FirebaseAuthentication {
         email: email,
         password: password,
       );
-      return credential.user!.uid;
-    } on FirebaseAuthException {
-      return null;
+      return credential.user!.email;
+    } on FirebaseAuthException catch (e) {
+       Fluttertoast.showToast(msg: '$e');
     }
   }
 
 // Users Login via Google third_party provider
-  Future<String?> loginWithGoogle()async{
-    final GoogleSignInAccount? googleSignInAccount = await googleSignIn.signIn();
-    final GoogleSignInAuthentication googleSignInAuthentication = await googleSignInAccount!.authentication;
+  Future<String?> loginWithGoogle() async {
+    final GoogleSignInAccount? googleSignInAccount =
+        await googleSignIn.signIn();
+    final GoogleSignInAuthentication googleSignInAuthentication =
+        await googleSignInAccount!.authentication;
     final AuthCredential authCredential = GoogleAuthProvider.credential(
       accessToken: googleSignInAuthentication.accessToken,
       idToken: googleSignInAuthentication.idToken,
     );
-    final UserCredential authResult = await _firebaseAuth.signInWithCredential(authCredential);
+    final UserCredential authResult =
+        await _firebaseAuth.signInWithCredential(authCredential);
     final User? user = authResult.user;
-    if(user != null){
+    if (user != null) {
       return '$user';
     }
     return null;
   }
 
 // Users Logout Method
-  Future<bool> logOut()async{
-    try{
+  Future<bool> logOut() async {
+    try {
       googleSignIn.disconnect();
       _firebaseAuth.signOut();
       return true;
-    }on FirebaseAuthException{
+    } on FirebaseAuthException {
       return false;
     }
   }
