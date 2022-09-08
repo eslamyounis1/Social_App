@@ -11,6 +11,11 @@ class SocialRegisterCubit extends Cubit<SocialRegisterStates> {
   final textFieldFocusNode = FocusNode();
   bool obscured = true;
   bool circular = false;
+  void circularIndicatorChange(){
+    emit(SocialRegisterLoadingState());
+    circular = !circular;
+    emit(SocialRegisterSuccessState());
+  }
 
   void toggleObscured() {
     obscured = !obscured;
