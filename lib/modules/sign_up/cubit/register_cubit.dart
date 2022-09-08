@@ -1,9 +1,11 @@
 import 'package:bloc/bloc.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:google_sign_in/google_sign_in.dart';
+import 'package:social_app/models/user_model.dart';
 import 'package:social_app/modules/sign_up/cubit/states.dart';
 
 class SocialRegisterCubit extends Cubit<SocialRegisterStates> {
@@ -14,13 +16,19 @@ class SocialRegisterCubit extends Cubit<SocialRegisterStates> {
   final GoogleSignIn googleSignIn = GoogleSignIn();
 
 // Users Register Using Email And Password
-  Future<String?> createUser(String email, String password) async {
+  Future<String?> createUser(String email, String password,String phone,String name) async {
     emit(SocialRegisterLoadingState());
     try {
       UserCredential credential =
-      await _firebaseAuth.createUserWithEmailAndPassword(
+          await _firebaseAuth.createUserWithEmailAndPassword(
         email: email,
         password: password,
+      );
+      userCreate(
+        uid: credential.user!.uid,
+        phone: phone,
+        email: email,
+        name: name,
       );
       emit(SocialRegisterSuccessState());
       return credential.user!.uid;
@@ -31,19 +39,42 @@ class SocialRegisterCubit extends Cubit<SocialRegisterStates> {
     return null;
   }
 
+  Future<void> userCreate({
+    required String name,
+    required String email,
+    required String phone,
+    required String uid,
+  }) async {
+    SocialUserModel model = SocialUserModel(
+      name: name,
+      email: email,
+      phone: phone,
+      uid: uid,
+    );
+    FirebaseFirestore.instance
+        .collection('users')
+        .doc(uid)
+        .set(model.toMap())
+        .then((value) {
+          emit(SocialCreateUserSuccessState());
+    })
+        .catchError((error) {
+          emit(SocialCreateUserErrorState(error.toString()));
+    });
+  }
 
 // Users Login via Google third_party provider
   Future<String?> loginWithGoogle() async {
     final GoogleSignInAccount? googleSignInAccount =
-    await googleSignIn.signIn();
+        await googleSignIn.signIn();
     final GoogleSignInAuthentication googleSignInAuthentication =
-    await googleSignInAccount!.authentication;
+        await googleSignInAccount!.authentication;
     final AuthCredential authCredential = GoogleAuthProvider.credential(
       accessToken: googleSignInAuthentication.accessToken,
       idToken: googleSignInAuthentication.idToken,
     );
     final UserCredential authResult =
-    await _firebaseAuth.signInWithCredential(authCredential);
+        await _firebaseAuth.signInWithCredential(authCredential);
     final User? user = authResult.user;
     if (user != null) {
       return '$user';
@@ -65,17 +96,6 @@ class SocialRegisterCubit extends Cubit<SocialRegisterStates> {
   final textFieldFocusNode = FocusNode();
   bool obscured = true;
   bool circular = false;
-
-  // void circularIndicatorChange() {
-  //   emit(SocialRegisterLoadingState());
-  //   circular = !circular;
-  //   Future.delayed(
-  //       const Duration(seconds: 1),
-  //           (){
-  //         circular = false;
-  //           }
-  //   );
-  // }
 
   void toggleObscured() {
     obscured = !obscured;
