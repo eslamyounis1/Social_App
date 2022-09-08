@@ -1,13 +1,16 @@
+import 'package:conditional_builder_null_safety/conditional_builder_null_safety.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:iconsax/iconsax.dart';
-import 'package:social_app/shared/cubit/cubit.dart';
-import 'package:social_app/shared/cubit/states.dart';
+import 'package:social_app/modules/login/cubit/states.dart';
 
 import '../../shared/firebase_auth.dart';
+import '../sign_up/cubit/register_cubit.dart';
+import '../sign_up/cubit/states.dart';
 import '../sign_up/sign_up_screen.dart';
+import 'cubit/login_cubit.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -19,26 +22,19 @@ class LoginScreen extends StatefulWidget {
 class _LoginScreenState extends State<LoginScreen> {
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _pwdController = TextEditingController();
-
-  late FirebaseAuthentication auth;
-
-  @override
+@override
   void initState() {
-    Firebase.initializeApp().whenComplete(() {
-      auth = FirebaseAuthentication();
-      setState(() {});
-    });
+    // TODO: implement initState
     super.initState();
   }
-
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (BuildContext context) => SocialRegisterCubit(),
-      child: BlocConsumer<SocialRegisterCubit, SocialRegisterStates>(
+      create: (context) => SocialLoginCubit(),
+      child: BlocConsumer<SocialLoginCubit, SocialLoginStates>(
         listener: (context, state) {},
         builder: (context, state) {
-          var cubit = SocialRegisterCubit.get(context);
+          var cubit = SocialLoginCubit.get(context);
           return Scaffold(
             appBar: AppBar(
               backgroundColor: Colors.transparent,
@@ -97,12 +93,12 @@ class _LoginScreenState extends State<LoginScreen> {
                                       color: Colors.black, fontSize: 20),
                                   decoration: InputDecoration(
                                     floatingLabelBehavior:
-                                        FloatingLabelBehavior.never,
+                                    FloatingLabelBehavior.never,
                                     //Hides label on focus or if filled
                                     filled: true,
                                     // Needed for adding a fill color
                                     fillColor:
-                                        const Color(0xff50C4ED).withOpacity(0),
+                                    const Color(0xff50C4ED).withOpacity(0),
                                     isDense: true,
                                     // Reduces height a bit
                                     border: OutlineInputBorder(
@@ -152,7 +148,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                     focusNode: cubit.textFieldFocusNode,
                                     decoration: InputDecoration(
                                       floatingLabelBehavior:
-                                          FloatingLabelBehavior.never,
+                                      FloatingLabelBehavior.never,
                                       filled: true,
                                       fillColor: const Color(0xff50C4ED)
                                           .withOpacity(0),
@@ -200,7 +196,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                     context,
                                     MaterialPageRoute(
                                         builder: (context) =>
-                                            const SignUpScreen()),
+                                        const SignUpScreen()),
                                   );
                                 },
                                 child: const Text(
@@ -246,7 +242,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                 backgroundColor: Colors.transparent,
                                 elevation: 0.0),
                             onPressed: () {
-                              auth
+                              cubit
                                   .login(
                                 _emailController.text,
                                 _pwdController.text,
@@ -255,17 +251,31 @@ class _LoginScreenState extends State<LoginScreen> {
                                 debugPrint('$value successfully logged in');
                               });
                             },
-                            child: cubit.circular
-                                ? const CircularProgressIndicator(
+                            child: ConditionalBuilder(
+                              condition: state is! SocialLoginLoadingState,
+                              builder: (context) => const Text(
+                                "Log in",
+                                style: TextStyle(
                                     color: Colors.white,
-                                  )
-                                : const Text(
-                                    "Log in",
-                                    style: TextStyle(
-                                        color: Colors.white,
-                                        fontSize: 20,
-                                        fontWeight: FontWeight.w700),
-                                  ),
+                                    fontSize: 20,
+                                    fontWeight: FontWeight.w700),
+                              ),
+                              fallback: (context) =>
+                              const CircularProgressIndicator(
+                                color: Colors.white,
+                              ),
+                            ),
+                            // cubit.circular
+                            //     ? const CircularProgressIndicator(
+                            //         color: Colors.white,
+                            //       )
+                            //     : const Text(
+                            //         "Log in",
+                            //         style: TextStyle(
+                            //             color: Colors.white,
+                            //             fontSize: 20,
+                            //             fontWeight: FontWeight.w700),
+                            //       ),
                           ),
                         ),
                       ],
@@ -276,7 +286,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   ),
                   InkWell(
                     onTap: () {
-                      auth.loginWithGoogle().then((value) {
+                      cubit.loginWithGoogle().then((value) {
                         if (value == null) {
                           debugPrint('Error signing In with google');
                           Fluttertoast.showToast(msg: 'Error Login');

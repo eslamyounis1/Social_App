@@ -41,6 +41,7 @@ dependencies:
   iconsax: ^0.0.8
   flutter_svg: ^1.1.4
   fluttertoast: ^8.0.9
+  conditional_builder_null_safety: ^0.0.6
 
   # firebase_packages
   firebase_core: ^1.21.1
