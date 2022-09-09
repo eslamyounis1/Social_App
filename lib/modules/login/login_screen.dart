@@ -249,6 +249,8 @@ class _LoginScreenState extends State<LoginScreen> {
                               )
                                   .then((value) {
                                 debugPrint('$value successfully logged in');
+                              }).catchError((error){
+                                debugPrint(error.toString());
                               });
                             },
                             child: ConditionalBuilder(
