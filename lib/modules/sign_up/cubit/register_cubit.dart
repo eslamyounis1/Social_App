@@ -30,10 +30,11 @@ class SocialRegisterCubit extends Cubit<SocialRegisterStates> {
         email: email,
         name: name,
       );
-      emit(SocialRegisterSuccessState());
+
       return credential.user!.uid;
     } on FirebaseAuthException catch (e) {
       Fluttertoast.showToast(msg: '$e');
+      debugPrint(e.toString());
       emit(SocialRegisterErrorState(e.toString()));
     }
     return null;

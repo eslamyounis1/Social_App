@@ -53,16 +53,6 @@ class SocialLoginCubit extends Cubit<SocialLoginStates>{
   bool obscured = true;
   bool circular = false;
 
-  // void circularIndicatorChange() {
-  //   emit(SocialRegisterLoadingState());
-  //   circular = !circular;
-  //   Future.delayed(
-  //       const Duration(seconds: 1),
-  //           (){
-  //         circular = false;
-  //       }
-  //   );
-  // }
 
   void toggleObscured() {
     obscured = !obscured;

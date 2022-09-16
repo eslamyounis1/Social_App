@@ -22,7 +22,7 @@ class SocialUserModel{
     return {
       'name': name,
       'email': email,
-      'phone': uid,
+      'phone': phone,
       'uid' : uid,
 
     };
