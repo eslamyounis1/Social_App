@@ -21,7 +21,7 @@ class SocialLoginCubit extends Cubit<SocialLoginStates>{
         email: email,
         password: password,
       );
-      emit(SocialLoginSuccessState());
+      emit(SocialLoginSuccessState(credential.user!.uid));
       return credential.user!.email;
     } on FirebaseAuthException catch (e) {
       Fluttertoast.showToast(msg: '$e');

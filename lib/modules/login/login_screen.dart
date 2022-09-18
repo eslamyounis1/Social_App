@@ -5,7 +5,10 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:social_app/modules/login/cubit/states.dart';
+import 'package:social_app/shared/local/cache_helper.dart';
 
+import '../../layout/layout.dart';
+import '../../shared/components/components.dart';
 import '../../shared/firebase_auth.dart';
 import '../sign_up/cubit/register_cubit.dart';
 import '../sign_up/cubit/states.dart';
@@ -22,17 +25,31 @@ class LoginScreen extends StatefulWidget {
 class _LoginScreenState extends State<LoginScreen> {
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _pwdController = TextEditingController();
-@override
+
+  @override
   void initState() {
     // TODO: implement initState
     super.initState();
   }
+
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
       create: (context) => SocialLoginCubit(),
       child: BlocConsumer<SocialLoginCubit, SocialLoginStates>(
-        listener: (context, state) {},
+        listener: (context, state) {
+          if (state is SocialLoginSuccessState) {
+            CacheHelper.putDataInSharedPreference(
+              key: 'uid',
+              value: state.uid,
+            ).then((value) {
+              navigateAndFinish(
+                context,
+                const SocialAppLayout(),
+              );
+            });
+          }
+        },
         builder: (context, state) {
           var cubit = SocialLoginCubit.get(context);
           return Scaffold(
@@ -93,12 +110,12 @@ class _LoginScreenState extends State<LoginScreen> {
                                       color: Colors.black, fontSize: 20),
                                   decoration: InputDecoration(
                                     floatingLabelBehavior:
-                                    FloatingLabelBehavior.never,
+                                        FloatingLabelBehavior.never,
                                     //Hides label on focus or if filled
                                     filled: true,
                                     // Needed for adding a fill color
                                     fillColor:
-                                    const Color(0xff50C4ED).withOpacity(0),
+                                        const Color(0xff50C4ED).withOpacity(0),
                                     isDense: true,
                                     // Reduces height a bit
                                     border: OutlineInputBorder(
@@ -148,7 +165,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                     focusNode: cubit.textFieldFocusNode,
                                     decoration: InputDecoration(
                                       floatingLabelBehavior:
-                                      FloatingLabelBehavior.never,
+                                          FloatingLabelBehavior.never,
                                       filled: true,
                                       fillColor: const Color(0xff50C4ED)
                                           .withOpacity(0),
@@ -196,7 +213,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                     context,
                                     MaterialPageRoute(
                                         builder: (context) =>
-                                        const SignUpScreen()),
+                                            const SignUpScreen()),
                                   );
                                 },
                                 child: const Text(
@@ -261,7 +278,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                     fontWeight: FontWeight.w700),
                               ),
                               fallback: (context) =>
-                              const CircularProgressIndicator(
+                                  const CircularProgressIndicator(
                                 color: Colors.white,
                               ),
                             ),

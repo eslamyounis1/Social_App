@@ -130,7 +130,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                             style: TextStyle(fontSize: 20),
                           ),
                           onPressed: () {
-                            //signup screen
+                            Navigator.push(context, MaterialPageRoute(builder: (context)=>const LoginScreen()));
                           },
                         )
                       ],
