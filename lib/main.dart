@@ -1,11 +1,16 @@
 import 'package:bloc/bloc.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:social_app/layout/cubit/cubit.dart';
 import 'package:social_app/layout/layout.dart';
 import 'package:social_app/shared/bloc_observer.dart';
+import 'package:social_app/shared/components/constants.dart';
 import 'package:social_app/shared/local/cache_helper.dart';
 
+import 'layout/cubit/states.dart';
 import 'modules/login/login_screen.dart';
+import 'shared/styles/themes/themes.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -15,7 +20,7 @@ void main() async {
   Widget widget;
 
   await CacheHelper.init();
-  var uid = CacheHelper.getDataFromSharedPreference(key: 'uid');
+   uid = CacheHelper.getDataFromSharedPreference(key: 'uid');
 
   if (uid != null) {
     widget = const SocialAppLayout();
@@ -36,13 +41,21 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      title: 'Social App',
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
+    return BlocProvider(
+      create: (context)=>SocialCubit()..getUserData(),
+      child: BlocConsumer<SocialCubit,SocialStates>(
+        listener: (context,state){},
+        builder: (context,state){
+          return MaterialApp(
+            debugShowCheckedModeBanner: false,
+            title: 'Social App',
+            theme: lightTheme,
+            themeMode: ThemeMode.light,
+            home: startWidget,
+          );
+        },
+
       ),
-      home: startWidget,
     );
   }
 }

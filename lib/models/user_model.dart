@@ -11,8 +11,8 @@ class SocialUserModel{
     this.uid,
     this.isEmailVerified,
 });
-  SocialUserModel.fromJson(Map<String,dynamic> json){
-    email = json['email'];
+  SocialUserModel.fromJson(Map<String,dynamic>? json){
+    email = json!['email'];
     name = json['name'];
     phone = json['phone'];
     uid = json['uid'];
