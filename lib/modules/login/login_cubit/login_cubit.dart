@@ -4,7 +4,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:google_sign_in/google_sign_in.dart';
-import 'package:social_app/modules/login/cubit/states.dart';
+import 'package:social_app/modules/login/login_cubit/states.dart';
 
 class SocialLoginCubit extends Cubit<SocialLoginStates>{
   SocialLoginCubit() : super(SocialLoginInitialState());

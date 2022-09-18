@@ -4,16 +4,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:iconsax/iconsax.dart';
-import 'package:social_app/modules/login/cubit/states.dart';
 import 'package:social_app/shared/local/cache_helper.dart';
 
 import '../../layout/layout.dart';
 import '../../shared/components/components.dart';
 import '../../shared/firebase_auth.dart';
-import '../sign_up/cubit/register_cubit.dart';
-import '../sign_up/cubit/states.dart';
 import '../sign_up/sign_up_screen.dart';
-import 'cubit/login_cubit.dart';
+import 'login_cubit/login_cubit.dart';
+import 'login_cubit/states.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});

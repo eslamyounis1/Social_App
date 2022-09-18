@@ -6,7 +6,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:social_app/models/user_model.dart';
-import 'package:social_app/modules/sign_up/cubit/states.dart';
+import 'package:social_app/modules/sign_up/sign_up_cubit/states.dart';
 
 class SocialRegisterCubit extends Cubit<SocialRegisterStates> {
   SocialRegisterCubit() : super(SocialRegisterInitialState());
@@ -51,6 +51,7 @@ class SocialRegisterCubit extends Cubit<SocialRegisterStates> {
       email: email,
       phone: phone,
       uid: uid,
+      isEmailVerified: false,
     );
     FirebaseFirestore.instance
         .collection('users')

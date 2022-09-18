@@ -2,15 +2,10 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_svg/svg.dart';
-import 'package:iconsax/iconsax.dart';
-import 'package:social_app/shared/firebase_auth.dart';
+import 'package:social_app/modules/sign_up/sign_up_cubit/register_cubit.dart';
+import 'package:social_app/modules/sign_up/sign_up_cubit/states.dart';
 
-import '../../layout/layout.dart';
-import '../../shared/components/components.dart';
 import '../login/login_screen.dart';
-import 'cubit/register_cubit.dart';
-import 'cubit/states.dart';
 
 class SignUpScreen extends StatefulWidget {
   const SignUpScreen({Key? key}) : super(key: key);
