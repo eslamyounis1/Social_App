@@ -41,21 +41,18 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(
-      create: (context)=>SocialCubit()..getUserData(),
-      child: BlocConsumer<SocialCubit,SocialStates>(
-        listener: (context,state){},
-        builder: (context,state){
-          return MaterialApp(
-            debugShowCheckedModeBanner: false,
-            title: 'Social App',
-            theme: lightTheme,
-            themeMode: ThemeMode.light,
-            home: startWidget,
-          );
-        },
+    // return BlocConsumer<SocialCubit,SocialStates>(
+    //   listener: (context,state){},
+    //   builder: (context,state){
+        return MaterialApp(
+          debugShowCheckedModeBanner: false,
+          title: 'Social App',
+          theme: lightTheme,
+          themeMode: ThemeMode.light,
+          home: startWidget,
+        );
+      }
 
-      ),
-    );
+
   }
-}
+

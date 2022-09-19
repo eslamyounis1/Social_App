@@ -5,7 +5,21 @@ class SocialGetUserLoadingState extends SocialStates{}
 
 class SocialGetUserSuccessState extends SocialStates{}
 
+
 class SocialGetUserErrorState extends SocialStates{
   final String error;
   SocialGetUserErrorState(this.error);
+}
+
+
+
+
+
+
+
+
+class SocialUserLogoutSuccessState extends SocialStates{}
+class SocialUserLogoutErrorState extends SocialStates{
+  final String error;
+  SocialUserLogoutErrorState(this.error);
 }

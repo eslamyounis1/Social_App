@@ -1,6 +1,8 @@
 import 'package:bloc/bloc.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 import 'package:social_app/layout/cubit/states.dart';
 import 'package:social_app/models/user_model.dart';
 
@@ -11,7 +13,7 @@ class SocialCubit extends Cubit<SocialStates> {
 
   static SocialCubit get(context) => BlocProvider.of(context);
 
-  SocialUserModel? model;
+   SocialUserModel? model;
 
   void getUserData() {
     emit(SocialGetUserLoadingState());
@@ -28,5 +30,17 @@ class SocialCubit extends Cubit<SocialStates> {
           print(error.toString());
           emit(SocialGetUserErrorState(error.toString()));
     });
+  }
+
+// Users Logout Method
+  Future<bool> logOut() async {
+    try {
+      FirebaseAuth.instance.signOut();
+      emit(SocialUserLogoutSuccessState());
+      return true;
+    } on FirebaseAuthException catch(error) {
+      emit(SocialUserLogoutErrorState(error.toString()));
+      return false;
+    }
   }
 }
