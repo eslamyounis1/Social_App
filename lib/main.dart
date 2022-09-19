@@ -48,6 +48,7 @@ class MyApp extends StatelessWidget {
           debugShowCheckedModeBanner: false,
           title: 'Social App',
           theme: lightTheme,
+          darkTheme: darkTheme,
           themeMode: ThemeMode.light,
           home: startWidget,
         );
