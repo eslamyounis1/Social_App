@@ -3,7 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:hexcolor/hexcolor.dart';
 
 ThemeData lightTheme = ThemeData(
-  primarySwatch: Colors.deepOrange,
+  primarySwatch: Colors.blue,
   primaryColor: Colors.white,
   scaffoldBackgroundColor: HexColor('#F9F9F9'),
   appBarTheme:  AppBarTheme(
@@ -41,9 +41,10 @@ ThemeData lightTheme = ThemeData(
       color: Colors.black,
     ),
     subtitle1: TextStyle(
-      fontSize: 16.0,
+      fontSize: 14.0,
       fontWeight: FontWeight.w600,
       color: Colors.black,
+      height: 1.3,
     ),
   ),
   fontFamily: 'jannah',

@@ -97,7 +97,42 @@ class FeedsScreen extends StatelessWidget {
                       ],
                     ),
                   ],
-                )
+                ),
+                Padding(
+                  padding: const EdgeInsets.symmetric(
+                    vertical: 15.0,
+                  ),
+                  child: Container(
+                    width: double.infinity,
+                    height: 1.0,
+                    color: Colors.grey[300],
+                  ),
+                ),
+                Text(
+                  'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque et mollis metus. Nam non finibus nulla, id accumsan leo. Fusce quis massa cursus, mattis mauris vitae, lacinia velit. Sed vel lacinia ipsum. Quisque vitae congue mauris. Vestibulum et nulla risus.',
+                  style: Theme.of(context).textTheme.subtitle1,
+                ),
+                Container(
+                  child: TextButton(
+                    onPressed: () {},
+                    child: const Text(
+                      '#software',
+                    ),
+                  ),
+                ),
+                Container(
+                  height: 140.0,
+                  width: double.infinity,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(5.0),
+                    image: const DecorationImage(
+                      fit: BoxFit.cover,
+                      image: NetworkImage(
+                        'https://img.freepik.com/free-photo/beautiful-young-brunette-woman-with-pleasant-appearance-tender-smile_273609-18319.jpg?w=996&t=st=1663559798~exp=1663560398~hmac=08a5c5360441701d6ae92f99cfbd630d5603e1dcb5399a702ae2a826555b193a',
+                      ),
+                    ),
+                  ),
+                ),
               ],
             ),
           ),
