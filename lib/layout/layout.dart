@@ -10,6 +10,7 @@ import 'package:social_app/modules/login/login_screen.dart';
 import 'package:social_app/shared/components/components.dart';
 import 'package:social_app/shared/local/cache_helper.dart';
 
+import '../modules/new_post/new_post_screen.dart';
 import '../shared/styles/icon_broken.dart';
 
 class SocialAppLayout extends StatelessWidget {
@@ -20,7 +21,11 @@ class SocialAppLayout extends StatelessWidget {
     return BlocProvider(
       create: (context) => SocialCubit()..getUserData(),
       child: BlocConsumer<SocialCubit, SocialStates>(
-        listener: (context, state) {},
+        listener: (context, state) {
+          if (state is SocialNewPostState){
+            Navigator.push(context, MaterialPageRoute(builder: (context)=>const NewPostScreen()));
+          }
+        },
         builder: (context, state) {
           var cubit = SocialCubit.get(context);
           return Scaffold(
@@ -58,6 +63,11 @@ class SocialAppLayout extends StatelessWidget {
                       IconBroken.Chat,
                     ),
                     label: 'Chats'),
+                BottomNavigationBarItem(
+                    icon: Icon(
+                      IconBroken.Paper_Upload,
+                    ),
+                    label: 'Post'),
                 BottomNavigationBarItem(
                     icon: Icon(
                       IconBroken.Location,
