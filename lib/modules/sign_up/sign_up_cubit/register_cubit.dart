@@ -29,6 +29,7 @@ class SocialRegisterCubit extends Cubit<SocialRegisterStates> {
         phone: phone,
         email: email,
         name: name,
+
       );
 
       return credential.user!.uid;
@@ -45,12 +46,16 @@ class SocialRegisterCubit extends Cubit<SocialRegisterStates> {
     required String email,
     required String phone,
     required String uid,
+
   }) async {
     SocialUserModel model = SocialUserModel(
       name: name,
       email: email,
       phone: phone,
       uid: uid,
+      bio: 'write your bio ....',
+      image: 'https://img.freepik.com/free-photo/pleasant-looking-serious-man-stands-profile-has-confident-expression-wears-casual-white-t-shirt_273609-16959.jpg?w=996&t=st=1664011983~exp=1664012583~hmac=7beb90f4a40ae486e744ee343a88624bbfcbb539dec30e0a5cf78a7aec04dc64',
+      cover: 'https://img.freepik.com/free-photo/pleasant-looking-serious-man-stands-profile-has-confident-expression-wears-casual-white-t-shirt_273609-16959.jpg?w=996&t=st=1664011983~exp=1664012583~hmac=7beb90f4a40ae486e744ee343a88624bbfcbb539dec30e0a5cf78a7aec04dc64',
       isEmailVerified: false,
     );
     FirebaseFirestore.instance

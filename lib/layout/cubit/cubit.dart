@@ -7,6 +7,7 @@ import 'package:google_sign_in/google_sign_in.dart';
 import 'package:social_app/layout/cubit/states.dart';
 import 'package:social_app/models/user_model.dart';
 import 'package:social_app/modules/chats/chats_screen.dart';
+import 'package:social_app/modules/new_post/new_post_screen.dart';
 import 'package:social_app/modules/settings/settings_screen.dart';
 import 'package:social_app/modules/users/users_screen.dart';
 
@@ -41,6 +42,7 @@ class SocialCubit extends Cubit<SocialStates> {
   List<Widget> screens = [
     const FeedsScreen(),
     const ChatsScreen(),
+    const NewPostScreen(),
     const UsersScreen(),
     const SettingsScreen(),
   ];
@@ -56,6 +58,7 @@ class SocialCubit extends Cubit<SocialStates> {
 List<String> titles = [
   'TimeLine',
   'Chats',
+  'Posts',
   'Users',
   'Settings'
 ];
