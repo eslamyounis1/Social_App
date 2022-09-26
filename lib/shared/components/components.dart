@@ -1,5 +1,8 @@
 // Navigation methods
 import 'package:flutter/material.dart';
+
+import '../styles/icon_broken.dart';
+
 Widget defaultButton({
   double width = double.infinity,
   double? height,
@@ -30,12 +33,32 @@ Widget defaultButton({
       ),
     );
 
-
-
-
+PreferredSizeWidget defaultAppBar({
+  required BuildContext context,
+  String? title,
+  List<Widget>? actions,
+}) =>
+    AppBar(
+      leading: IconButton(
+        onPressed: () {
+          Navigator.pop(context);
+        },
+        icon: const Icon(
+          IconBroken.Arrow___Left_2,
+        ),
+      ),
+      title: Text(title ?? ''),
+      titleSpacing: 5.0,
+      actions: actions,
+    );
 
 void navigateAndFinish(context, widget) => Navigator.pushAndRemoveUntil(
-  context,
-  MaterialPageRoute(builder: (context) => widget),
+      context,
+      MaterialPageRoute(builder: (context) => widget),
       (route) => false,
-);
+    );
+
+void navigateTo(context, widget) => Navigator.push(
+      context,
+      MaterialPageRoute(builder: (context) => widget),
+    );

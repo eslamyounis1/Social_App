@@ -20,14 +20,16 @@ void main() async {
   Widget widget;
 
   await CacheHelper.init();
-   uid = CacheHelper.getDataFromSharedPreference(key: 'uid');
+  uid = CacheHelper.getDataFromSharedPreference(key: 'uid');
 
   if (uid != null) {
     widget = const SocialAppLayout();
   } else {
     widget = const LoginScreen();
   }
-  runApp( MyApp(startWidget: widget,));
+  runApp(MyApp(
+    startWidget: widget,
+  ));
 }
 
 class MyApp extends StatelessWidget {
@@ -44,16 +46,20 @@ class MyApp extends StatelessWidget {
     // return BlocConsumer<SocialCubit,SocialStates>(
     //   listener: (context,state){},
     //   builder: (context,state){
-        return MaterialApp(
-          debugShowCheckedModeBanner: false,
-          title: 'Social App',
-          theme: lightTheme,
-          darkTheme: darkTheme,
-          themeMode: ThemeMode.light,
-          home: startWidget,
-        );
-      }
-
-
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider(
+          create: (BuildContext context) => SocialCubit()..getUserData(),
+        ),
+      ],
+      child: MaterialApp(
+        debugShowCheckedModeBanner: false,
+        title: 'Social App',
+        theme: lightTheme,
+        darkTheme: darkTheme,
+        themeMode: ThemeMode.light,
+        home: startWidget,
+      ),
+    );
   }
-
+}

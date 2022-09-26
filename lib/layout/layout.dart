@@ -18,71 +18,68 @@ class SocialAppLayout extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(
-      create: (context) => SocialCubit()..getUserData(),
-      child: BlocConsumer<SocialCubit, SocialStates>(
-        listener: (context, state) {
-          if (state is SocialNewPostState){
-            Navigator.push(context, MaterialPageRoute(builder: (context)=>const NewPostScreen()));
-          }
-        },
-        builder: (context, state) {
-          var cubit = SocialCubit.get(context);
-          return Scaffold(
-            appBar: AppBar(
-              title: Text(cubit.titles[cubit.currentIndex]),
-              actions: [
-                IconButton(
-                  onPressed: () {},
-                  icon: const Icon(
-                    IconBroken.Notification,
-                  ),
+    return BlocConsumer<SocialCubit, SocialStates>(
+      listener: (context, state) {
+        if (state is SocialNewPostState){
+          Navigator.push(context, MaterialPageRoute(builder: (context)=>const NewPostScreen()));
+        }
+      },
+      builder: (context, state) {
+        var cubit = SocialCubit.get(context);
+        return Scaffold(
+          appBar: AppBar(
+            title: Text(cubit.titles[cubit.currentIndex]),
+            actions: [
+              IconButton(
+                onPressed: () {},
+                icon: const Icon(
+                  IconBroken.Notification,
                 ),
-                IconButton(
-                  onPressed: () {},
-                  icon: const Icon(
-                    IconBroken.Search,
-                  ),
+              ),
+              IconButton(
+                onPressed: () {},
+                icon: const Icon(
+                  IconBroken.Search,
                 ),
-              ],
-            ),
-            body: cubit.screens[cubit.currentIndex],
-            bottomNavigationBar: BottomNavigationBar(
-              onTap: (index) {
-                cubit.changeBottomNav(index);
-              },
-              currentIndex: cubit.currentIndex,
-              items: const [
-                BottomNavigationBarItem(
-                    icon: Icon(
-                      IconBroken.Home,
-                    ),
-                    label: 'Home'),
-                BottomNavigationBarItem(
-                    icon: Icon(
-                      IconBroken.Chat,
-                    ),
-                    label: 'Chats'),
-                BottomNavigationBarItem(
-                    icon: Icon(
-                      IconBroken.Paper_Upload,
-                    ),
-                    label: 'Post'),
-                BottomNavigationBarItem(
-                    icon: Icon(
-                      IconBroken.Location,
-                    ),
-                    label: 'Users'),
-                BottomNavigationBarItem(
-                    icon: Icon(
-                      IconBroken.Setting,
-                    ),
-                    label: 'Settings'),
-              ],
-            ),
-          );
-        },
-      ),
+              ),
+            ],
+          ),
+          body: cubit.screens[cubit.currentIndex],
+          bottomNavigationBar: BottomNavigationBar(
+            onTap: (index) {
+              cubit.changeBottomNav(index);
+            },
+            currentIndex: cubit.currentIndex,
+            items: const [
+              BottomNavigationBarItem(
+                  icon: Icon(
+                    IconBroken.Home,
+                  ),
+                  label: 'Home'),
+              BottomNavigationBarItem(
+                  icon: Icon(
+                    IconBroken.Chat,
+                  ),
+                  label: 'Chats'),
+              BottomNavigationBarItem(
+                  icon: Icon(
+                    IconBroken.Paper_Upload,
+                  ),
+                  label: 'Post'),
+              BottomNavigationBarItem(
+                  icon: Icon(
+                    IconBroken.Location,
+                  ),
+                  label: 'Users'),
+              BottomNavigationBarItem(
+                  icon: Icon(
+                    IconBroken.Setting,
+                  ),
+                  label: 'Settings'),
+            ],
+          ),
+        );
+      },
     );
   }
 // ConditionalBuilder(
